@@ -1,9 +1,9 @@
-from ctypes import resize
 from google.cloud.sql.connector import Connector
 import sqlalchemy
-from sqlalchemy.engine import result_tuple
+import django
 
 def getconn():
+  connector = Connector();
   result = connector.connect(
     "cs348prj:us-central1:cs348prj",
     "pymysql",
@@ -15,10 +15,10 @@ def getconn():
 
 
 if __name__ == '__main__':
-  connector = Connector();
   pool = sqlalchemy.create_engine( "mysql+pymysql://", creator=getconn,)
   
   data = [('asdf', 2), ('stuff', 3), ('jgrfhk', 4), ('rjrkj', 1), ('adam', 40), ('neha', 7), ('test', 69), ('data', 10)]
+  print(django.get_version())
 
   with pool.connect() as db_conn:
     #db_conn.execute('CREATE TABLE test (data varchar(255), id int)')
