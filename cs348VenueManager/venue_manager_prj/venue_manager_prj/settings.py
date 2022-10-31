@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'venue_manager_prj.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cs348prj:us-central1:cs348prj',
+        'NAME': 'db1',
         'HOST': '35.222.185.10',
         'PORT': '3306',
         'USER': 'root',
