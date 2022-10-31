@@ -3,9 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>Venue Manager</title>
+
+    <style>
+body {
+  font-family: Arial;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+form.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+</style>
 </head>
 <body>
 <h1>Welcome to Venue Manager!</h1>
-<h2>add search features here</h2>
+<h2>search by performer:</h2><br><br>
+<a href="page2test.html">go to page2</a>
+
+<form action="/page2test.html">
+  <input type="text" placeholder="Search.." name="search2">
+  <button type="submit" value="Submit"></button>
+</form>
+
 </body>
 </html>
