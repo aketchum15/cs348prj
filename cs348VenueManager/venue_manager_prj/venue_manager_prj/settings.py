@@ -76,8 +76,13 @@ WSGI_APPLICATION = 'venue_manager_prj.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'cs348prj:us-central1:cs348prj',
+        'HOST': '35.222.185.10',
+        'PORT': '3306',
+        'USER': 'root',
+        'PASSWORD': 'cs348',
+
     }
 }
 
