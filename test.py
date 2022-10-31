@@ -24,7 +24,7 @@ if __name__ == '__main__':
     #db_conn.execute('CREATE TABLE test (data varchar(255), id int)')
     #for d in data:
     #  db_conn.execute(f'INSERT INTO test VALUE ("{d[0]}", {d[1]})')
-    result = db_conn.execute("SELECT * FROM test").fetchall()
+    result = db_conn.execute("SELECT * FROM Performers").fetchall()
 
     for row in result:
       print(result)
