@@ -15,8 +15,9 @@ class search_results(ListView):
     model = Performers
     template_name = 'search.html'
 
-    def get_results(self):
+    def get_queryset(self):
         query = self.request.GET.get("search")
+        print(query)
         object_list = Performers.objects.filter(Q(name__icontains=query))
         return  object_list
 
