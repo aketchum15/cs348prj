@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Venue Manager</title>
+
+</head>
+<body>
+<h2>Results</h2>
+
+<ul>
+  {% for result in object_list %}
+    <li>
+      {{ result.name }}
+    </li>
+  {% endfor %}
+</ul>
+
+</body>
+</html>

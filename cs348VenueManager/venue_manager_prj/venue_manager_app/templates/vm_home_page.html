@@ -48,11 +48,10 @@ form.example::after {
 <body>
 <h1>Welcome to Venue Manager!</h1>
 <h2>search by performer:</h2><br><br>
-<a href="page2test.html">go to page2</a>
 
-<form action="/page2test.html">
-  <input type="text" placeholder="Search.." name="search2">
-  <button type="submit" value="Submit"></button>
+
+<form action="{% url 'search results' %}" method="get">
+  <input type="text" placeholder="Search.." name="search">
 </form>
 
 </body>
