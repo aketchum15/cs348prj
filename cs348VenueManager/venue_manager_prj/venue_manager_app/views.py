@@ -7,9 +7,9 @@ from .models import Performers
 
 # Create your views here.
 
-#test fucntion for home page, change name and stuff later
+
 def home_page(request):
-    return render(request, 'venue_manager_app/vm_home_page.html')
+    return render(request, 'vm_home_page.html')
 
 class search_results(ListView):
     model = Performers
