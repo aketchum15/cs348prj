@@ -8,14 +8,20 @@
 <body>
 <h2>Results</h2>
 
-<h3>Name, Number of Crew Members, Genre</h3>
-<ul>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Number of Crew Members</th>
+    <th>Genre</th>
+  </tr>
   {% for result in object_list %}
-    <li>
-      {{ result.name }}, {{ result.num_crew_memeber }}, {{ result.genre }}
-    </li>
+    <tr>
+      <td> {{ result.name }} </td>
+      <td> {{ result.num_crew_memeber }} </td>
+      <td> {{ result.genre }} </td>
+    </tr>
   {% endfor %}
-</ul>
+</table>
 
 </body>
 </html>

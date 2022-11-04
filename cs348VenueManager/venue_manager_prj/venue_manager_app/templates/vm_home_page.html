@@ -52,6 +52,12 @@ form.example::after {
 
 <form action="{% url 'search results' %}" method="get">
   <input type="text" placeholder="Search.." name="search">
+  <select name="table" id="table-option">
+    <option value="Performers">Performers</option>
+    <option value="Shows">Shows</option>
+    <option value="Owners">Owners</option>
+    <option value="Venues">Venues</option>
+	</select>
 </form>
 
 </body>

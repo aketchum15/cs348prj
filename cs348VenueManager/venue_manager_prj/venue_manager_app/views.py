@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.views.generic import ListView
 from django.db.models import Q
 
-from .models import Performers
+from . import models as my_models
+from .models import *
 
 # Create your views here.
 
@@ -16,8 +17,15 @@ class search_results(ListView):
     template_name = 'search.html'
 
     def get_queryset(self):
-        query = self.request.GET.get("search")
-        print(query)
-        object_list = Performers.objects.filter(Q(name__icontains=query))
-        return  object_list
+        query = self.request.GET.get('search')
+        table = getattr(my_models, self.request.GET.get('table'))
+        if hasattr(table, 'name'):
+            object_list = table.objects.filter(Q(name__icontains=query))
+        else:
+            object_list = table.objects.filter(Q(id__icontains=query))
 
+        for item in object_list:
+            print(item)
+
+
+        return object_list
