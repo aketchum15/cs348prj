@@ -6,19 +6,20 @@
 
 </head>
 <body>
-<h2>Results</h2>
+	<h2>{{table}} Results</h2>
 
 <table>
   <tr>
-    <th>Name</th>
-    <th>Number of Crew Members</th>
-    <th>Genre</th>
+		{% for attr in attrs %}
+		  <th>{{attr}}</th>
+		{% endfor %}
   </tr>
   {% for result in object_list %}
     <tr>
-      <td> {{ result.name }} </td>
-      <td> {{ result.num_crew_memeber }} </td>
-      <td> {{ result.genre }} </td>
+			{% for attr in attrs %}
+				<td> {{ result.name }} </td>
+				<td> {{ result.attr }} </td>
+			{% endfor %}
     </tr>
   {% endfor %}
 </table>
