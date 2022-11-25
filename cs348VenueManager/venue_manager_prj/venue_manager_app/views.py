@@ -32,7 +32,7 @@ class search_results(ListView):
         context['table'] = table
 
         if (hasattr(table, 'name')):
-            context['attrs'] = [field.name for field in table._meta.get_fields()]
+            context['attrs'] = [field.name for field in table._meta.fields if field.name != 'id'] 
         else:
             context['attrs'] = ['id']
 
