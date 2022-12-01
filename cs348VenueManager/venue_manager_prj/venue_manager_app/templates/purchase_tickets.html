@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase Tickets</title>
+</head>
+<body>
+
+
+<form action="{% url 'purchase tickets' %}" method="get">
+  <label for="shows">Choose a show:</label>
+<select name="shows" id="shows">
+    <option value="Taylor Swift">Taylor Swift - LA center - 08/29/2023 - $400</option>
+  <option value="Harry Styles">Harry Styles - Chicago center - 05/12/2023 - $300</option>
+  <option value="Doja Cat">Doja Cat - Chicago center - 03/18/2023 - $300</option>
+  <option value="Kendrick Lamar">Kendrick Lamar - LA center - 06/25/2023 - $400</option>
+  <option value="The Weekend">The Weekend - LA center - 02/21/2023 - $400</option>
+  <option value="Justin Beiber">Justin Beiber - Atlanta Center - 07/17/2023 - $200</option>
+  <option value="5 Seconds of Summer">5 Seconds of Summer - Atlanta Center - 04/03/2023 - $200</option>
+  <option value="Adele">Adele - LA center - 11/20/2023 - $400</option>
+  <option value="Ariana Grande">Ariana Grande - LA center - 09/27/2023 - $300</option>
+  <option value="Billie Eilish">Billie Eilish - LA center - 10/15/2023 - $200</option>
+</select><br><br>
+  <label for="fname">First name:</label><br>
+   <input type="text" id="fname" name="fname" value="enter..."><br>
+  <label for="lname">Last name:</label><br>
+    <input type="text" id="lname" name="lname" value="enter..."><br><br>
+  <label for="email">Email:</label><br>
+    <input type="text" id="email" name="email" value="enter..."><br><br>
+  <label for="phone_number">Phone Number:</label><br>
+    <input type="text" id="phone_number" name="phone_number" value="enter..."><br><br>
+  <label for="payment_info">Card Number:</label><br>
+    <input type="text" id="payment_info" name="payment_info" value="enter..."><br><br>
+  <button id="submitbutton" type="submit" onclick="submit_button_pressed()">Purchase</button>
+</form>
+
+<script>
+  function submit_button_pressed()
+{
+  document.getElementById("submitbutton").innerHTML= "Your tickets have been purchased!"
+}
+</script>
+
+
+
+
+
+
+
+</body>
+</html>
