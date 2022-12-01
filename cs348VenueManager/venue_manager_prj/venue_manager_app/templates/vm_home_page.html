@@ -47,28 +47,12 @@ form.example::after {
 </head>
 <body>
 <h1>Welcome to Venue Manager!</h1>
-<h2>search</h2><br><br>
+<h2>search by performer:</h2><br><br>
+
+
 <form action="{% url 'search results' %}" method="get">
   <input type="text" placeholder="Search.." name="search">
-  <select name="table" id="table-option">
-    <option value="Performers">Performers</option>
-    <option value="Shows">Shows</option>
-    <option value="Owners">Owners</option>
-    <option value="Venues">Venues</option>
-	</select>
 </form>
-
-<div>
-
-<h2> HOT SHOWS </h2>
-  {% for row in object_list %}
-    {{row.date}}
-    {{row.performer}}
-    {{row.venue}}
-    {{row.ticket_price}}
-  {% endfor %}
-    
-</div>
 
 </body>
 </html>

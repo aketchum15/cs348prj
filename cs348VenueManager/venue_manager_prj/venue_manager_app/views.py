@@ -38,3 +38,21 @@ class search_results(ListView):
             context['attrs'] = ['id']
 
         return context
+
+def purchase_tickets(request):
+    #getting the information from form
+    payinfo = request.GET('payment_info')
+    perfname = request.GET('shows')
+    #getting information from the tables using the form information
+    table = my_models.Attendees
+    table2 = my_models.Performers
+    table3 = my_models.Shows
+    object_list = table.objects.filter(Q(card_number__icontains=payinfo))
+    attendee_id = object_list[0]
+    object_list2 = table2.objects.filter(Q(name__icontains=perfname))
+    performer_id = object_list2[0]
+    object_list3 = table3.objects.filter(Q(id__icontains=performer_id))
+    show_id = object_list3[0]
+    #inserting row into tickets table
+    insert_row = Tickets(attendee_id=attendee_id, show_id=show_id)
+    insert_row.save()
