@@ -52,7 +52,32 @@ form.example::after {
 
 <form action="{% url 'search results' %}" method="get">
   <input type="text" placeholder="Search.." name="search">
+  <select name="table" id="table-option">
+    <option value="Performers">Performers</option>
+    <option value="Shows">Shows</option>
+    <option value="Owners">Owners</option>
+    <option value="Venues">Venues</option>
+       </select>
 </form>
+
+<div>
+
+<h2> HOT SHOWS </h2>
+<table>
+	<tr>
+		<td> Date </td> <td> Performer </td> <td> Venue </td> <td> Ticket Price </td>
+	</tr>
+  {% for row in object_list %}
+	<tr>
+		<td> {{row.date}} </td>
+		<td> {{row.performer}} </td>
+		<td> {{row.venue}} </td>
+		<td> {{row.ticket_price}} </td>
+  {% endfor %}
+	</tr>
+</table>
+    
+</div>
 
 </body>
 </html>
