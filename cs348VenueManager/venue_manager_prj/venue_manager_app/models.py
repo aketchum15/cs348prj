@@ -43,6 +43,9 @@ class Attendees(models.Model):
     phone_number = models.IntegerField(default=0)
     card_number = models.IntegerField(default=0)
 
+    class Meta:
+        indexes = [models.Index(fields = ['name'])]
+
     def __str__(self):
         return self.name
 
