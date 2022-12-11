@@ -39,6 +39,10 @@ class search_results(ListView):
 
         return context
 
+def purchase_tickets_page(request):
+    context = {}
+    context['object_list'] = HomePage.objects.all()
+    return render(request, 'purchase_tickets.html', context=context)
 def purchase_tickets(request):
     #getting the information from form
     payinfo = request.GET('payment_info')
