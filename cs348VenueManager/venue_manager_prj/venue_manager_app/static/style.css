@@ -25,3 +25,10 @@
   background-color: #04AA6D;
   color: white;
 }
+
+table, th, td {
+  border: 100px solid;
+  border-collapse: collapse;
+  width: 100%;
+  border-color: #333;
+}
