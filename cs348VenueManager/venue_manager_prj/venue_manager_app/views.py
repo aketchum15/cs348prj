@@ -53,27 +53,37 @@ def purchase_tickets(request):
     table = my_models.Attendees
     table2 = my_models.Performers
     table3 = my_models.Shows
-    object_list = table.objects.filter(Q(name__icontains=name))
-    attendee_id = object_list[0]
-    object_list2 = table2.objects.filter(Q(name__icontains=perfname))
-    performer_id = object_list2[1]
-    object_list3 = table3.objects.filter(Q(id__icontains=performer_id))
-    showid = object_list3[1]
+    object_list = table.objects.filter(Q(name__icontains=name))[:1]
+
+    attendee_id = object_list.get().id
+    object_list2 = table2.objects.filter(Q(name__icontains=perfname))[:1]
+
+    performer_id = object_list2.get().id
+    object_list3 = table3.objects.filter(Q(id__icontains=performer_id))[:1]
+    showid = object_list3.get().id
+    print(f'showid: {showid}, performerid: {performer_id}, attendee_id: {attendee_id}')
+
+#### ABOVE WORKS ####
+# https://docs.djangoproject.com/en/4.1/topics/db/queries/
+# https://docs.djangoproject.com/en/4.1/ref/models/querysets/
+
+
+#### BELOW IS STILL WRONG #### 
 
 
     #transaction for checking show availability
         #get capacity from shows table with show id
-    obj_list = table3.objects.filter(Q(show_id__icontains=showid))
-    capacity = obj_list[4]
+    obj_list = table3.objects.filter(Q(id__icontains=showid))[:1]
+    capacity = obj_list.get().capacity
         #get count of tickets purchsed from Tickets table with show id
     table4 = my_models.Tickets
     obj_list2 = table4.objects.filter(Q(show_id__icontains=showid))
-    numtix = obj_list2[1]
+    numtix = obj_list2
         #check if capacity = num of tickets purchased, if yes, dont allow purchase
 
     #inserting row into tickets table
-    insert_row = Tickets(attendee_id=attendee_id, show_id=showid)
-    insert_row.save()
+    #insert_row = Tickets(attendee_id=attendee_id, show_id=showid)
+    #insert_row.save()
 
 def reports_page(request):
 

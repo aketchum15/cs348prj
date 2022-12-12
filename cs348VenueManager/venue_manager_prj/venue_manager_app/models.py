@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.query import django
+from django.core.validators import RegexValidator
 
 # Create your models here.
 class HomePage(models.Model):
@@ -38,9 +39,10 @@ class Shows(models.Model):
     date = models.DateField(default=django.utils.timezone.now)
 
 class Attendees(models.Model):
+    phoneNumberRegex = RegexValidator(regex = r"^\+?1?\d{8,15}$")
     name = models.CharField(max_length=100)
     email = models.EmailField()
-    phone_number = models.IntegerField(default=0)
+    phone_number = models.CharField(validators = [phoneNumberRegex], max_length = 16, unique = True)
     card_number = models.IntegerField(default=0)
 
     class Meta:
