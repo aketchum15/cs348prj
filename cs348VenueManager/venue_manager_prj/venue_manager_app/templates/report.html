@@ -1,8 +1,11 @@
+{% load static %}
+{% load filters %}
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="{% static 'style.css' %}"/>
 <head>
     <meta charset="UTF-8">
-    <title>Venue Manager</title>
+    <title>Statistics</title>
 
     <style>
 body {
@@ -13,5 +16,46 @@ body {
 
 <body>
 
-  some text. yea prolly.
+<h1> Statistics </h1>
 
+<div class="topnav" id="myTopnav">
+  <a class='active' href="{% url 'home page' %}">Home</a>
+  <a href="{% url 'purchase tickets page' %}">Purchase Tickets</a>
+  <a href="{% url 'reports page' %}">Statistics</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+
+  <h2> PERFORMER STATS </h2>
+
+  <table>
+    {% for key in performers_keys %}
+      <th> {{ key }} </th>
+    {% endfor %}
+
+    {% for row in performers_list %}
+      <tr>
+      {% for key in performers_keys %}
+        <td> {{ row|get_val:key }} </td>
+      {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+
+
+  <h2> VENUE STATS </h2>
+
+  <table>
+    {% for key in venues_keys %}
+      <th> {{ key }} </th>
+    {% endfor %}
+
+    {% for row in venues_list %}
+      <tr>
+      {% for key in venues_keys %}
+        <td> {{ row|get_val:key }} </td>
+      {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>

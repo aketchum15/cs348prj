@@ -14,12 +14,13 @@
   <div class="topnav" id="myTopnav">
     <a class='active' href="{% url 'home page' %}">Home</a>
     <a href="{% url 'purchase tickets page' %}">Purchase Tickets</a>
+  	<a href="{% url 'reports page' %}">Statistics</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
   </div>
 
-<table>
+<table border = 1>
   <tr>
 		{% for attr in attrs %}
 		  <th>{{attr}}</th>

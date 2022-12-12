@@ -90,15 +90,27 @@ def reports_page(request):
     context = {};
 
     with connection.cursor() as cursor:
-        cursor.execute("""SELECT p.name AS name, avg(s.ticket_price) AS avg_ticket_price, count(s.id) AS show_count, sum(num_attendees) AS fans FROM venue_manager_app_performers p 
+        cursor.execute("""SELECT p.name AS Name, avg(s.ticket_price) AS 'Average Ticket Price', count(s.id) AS 'Total Shows', sum(num_attendees) AS Fans FROM venue_manager_app_performers p 
                             JOIN venue_manager_app_shows s ON p.id = s.performer_id
 		                    GROUP BY p.id;""")
 
 
         columns = [col[0] for col in cursor.description]
     
-        object_list = [dict(zip(columns, row)) for row in cursor.fetchall()]
-        for o in object_list:
-            print(o)
+        performers_list = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+        context['performers_list'] = performers_list
+        context['performers_keys'] = performers_list[0].keys()
+
+        cursor.execute("""SELECT v.name, COUNT(s.id) AS 'Total Shows', count(DISTINCT s.performer_id) AS 'Total Performers', avg(s.ticket_price) AS 'Average Ticket Price' FROM venue_manager_app_venues v
+	                        JOIN venue_manager_app_shows s ON v.id = s.venue_id
+                            GROUP BY v.id;""")
+
+        columns = [col[0] for col in cursor.description]
+    
+        venues_list = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        
+        context['venues_list'] = venues_list
+        context['venues_keys'] = venues_list[0].keys()
 
     return render(request, 'report.html', context=context)
