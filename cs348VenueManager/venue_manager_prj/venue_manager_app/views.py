@@ -1,6 +1,7 @@
 from django.views.generic import ListView
 from django.shortcuts import render 
 from django.db.models import Q
+from django.db import connection
 
 from . import models as my_models
 from .models import *
@@ -43,6 +44,7 @@ def purchase_tickets_page(request):
     context = {}
     context['object_list'] = HomePage.objects.all()
     return render(request, 'purchase_tickets.html', context=context)
+
 def purchase_tickets(request):
     #getting the information from form
     payinfo = request.GET('payment_info')
@@ -60,3 +62,21 @@ def purchase_tickets(request):
     #inserting row into tickets table
     insert_row = Tickets(attendee_id=attendee_id, show_id=show_id)
     insert_row.save()
+
+def reports_page(request):
+
+    context = {};
+
+    with connection.cursor() as cursor:
+        cursor.execute("""SELECT p.name AS name, avg(s.ticket_price) AS avg_ticket_price, count(s.id) AS show_count, sum(num_attendees) AS fans FROM venue_manager_app_performers p 
+                            JOIN venue_manager_app_shows s ON p.id = s.performer_id
+		                    GROUP BY p.id;""")
+
+
+        columns = [col[0] for col in cursor.description]
+    
+        object_list = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        for o in object_list:
+            print(o)
+
+    return render(request, 'report.html', context=context)

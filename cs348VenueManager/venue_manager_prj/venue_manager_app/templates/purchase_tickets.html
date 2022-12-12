@@ -1,11 +1,25 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="{% static 'style.css' %}"/>
 <head>
     <meta charset="UTF-8">
     <title>Purchase Tickets</title>
 </head>
+
 <body>
 
+<h1> Purchase Tickets </h1>
+
+<div class="topnav" id="myTopnav">
+  <a class='active' href="{% url 'home page' %}">Home</a>
+  <a href="{% url 'purchase tickets page' %}">Purchase Tickets</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+
+<br><br>
 
 <form action="{% url 'purchase tickets' %}" method="get">
   <label for="shows">Choose a show:</label>

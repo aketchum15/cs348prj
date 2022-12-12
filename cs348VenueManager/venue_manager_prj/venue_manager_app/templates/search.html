@@ -1,6 +1,8 @@
 {% load filters %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="{% static 'style.css' %}"/>
 <head>
     <meta charset="UTF-8">
     <title>Venue Manager</title>
@@ -8,6 +10,14 @@
 </head>
 <body>
 	<h2>{{table}} Results</h2>
+
+  <div class="topnav" id="myTopnav">
+    <a class='active' href="{% url 'home page' %}">Home</a>
+    <a href="{% url 'purchase tickets page' %}">Purchase Tickets</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
 
 <table>
   <tr>
