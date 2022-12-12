@@ -16,7 +16,9 @@ body {
 
 <body>
 
-<h1> Statistics </h1>
+<img src="{% static 'Venue.jpeg' %}" width=85px height=85px style="float:left; padding:10px">
+<h1 style="display:inline-block; padding:10px">Statistics</h1>
+<br>
 
 <div class="topnav" id="myTopnav">
   <a class='active' href="{% url 'home page' %}">Home</a>
@@ -31,7 +33,7 @@ body {
 
   <table>
     {% for key in performers_keys %}
-      <th> {{ key }} </th>
+      <th> {{ key|title }} </th>
     {% endfor %}
 
     {% for row in performers_list %}
@@ -48,7 +50,7 @@ body {
 
   <table>
     {% for key in venues_keys %}
-      <th> {{ key }} </th>
+      <th> {{ key|title }} </th>
     {% endfor %}
 
     {% for row in venues_list %}

@@ -90,8 +90,9 @@ def reports_page(request):
     context = {};
 
     with connection.cursor() as cursor:
-        cursor.execute("""SELECT p.name AS Name, avg(s.ticket_price) AS 'Average Ticket Price', count(s.id) AS 'Total Shows', sum(num_attendees) AS Fans FROM venue_manager_app_performers p 
+        cursor.execute("""SELECT p.name AS Name, IFNULL(AVG(t.price), 0) AS 'Average Ticket Price', count(s.id) AS 'Total Shows', sum(num_attendees) AS Fans FROM venue_manager_app_performers p 
                             JOIN venue_manager_app_shows s ON p.id = s.performer_id
+                            LEFT JOIN venue_manager_app_tickets t ON t.show_id = s.id
 		                    GROUP BY p.id;""")
 
 
@@ -102,8 +103,9 @@ def reports_page(request):
         context['performers_list'] = performers_list
         context['performers_keys'] = performers_list[0].keys()
 
-        cursor.execute("""SELECT v.name, COUNT(s.id) AS 'Total Shows', count(DISTINCT s.performer_id) AS 'Total Performers', avg(s.ticket_price) AS 'Average Ticket Price' FROM venue_manager_app_venues v
+        cursor.execute("""SELECT v.name, COUNT(s.id) AS 'Total Shows', count(DISTINCT s.performer_id) AS 'Total Performers', IFNULL(AVG(t.price), 0) AS 'Average Ticket Price' FROM venue_manager_app_venues v
 	                        JOIN venue_manager_app_shows s ON v.id = s.venue_id
+                            LEFT JOIN venue_manager_app_tickets t ON t.show_id = s.id
                             GROUP BY v.id;""")
 
         columns = [col[0] for col in cursor.description]
