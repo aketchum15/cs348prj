@@ -34,7 +34,6 @@ class Venues(models.Model):
 class Shows(models.Model):
     num_attendees = models.IntegerField(default=0)
     performer = models.ForeignKey(Performers, on_delete=models.CASCADE)
-    ticket_price = models.IntegerField(default=0)
     venue = models.ForeignKey(Venues, on_delete=models.CASCADE)
     date = models.DateField(default=django.utils.timezone.now)
 
@@ -51,10 +50,8 @@ class Attendees(models.Model):
     def __str__(self):
         return self.name
 
+
 class Tickets(models.Model):
-    show = models.ForeignKey(Shows, on_delete=models.CASCADE)
-    attendee = models.ForeignKey(Attendees, on_delete=models.CASCADE)
-    price = models.IntegerField(default=0)
-
-
+    show_id = models.ForeignKey(Shows, on_delete=models.CASCADE)
+    attendee_id = models.ForeignKey(Attendees, on_delete=models.CASCADE)
 
