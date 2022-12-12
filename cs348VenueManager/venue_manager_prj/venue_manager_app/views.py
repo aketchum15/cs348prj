@@ -47,21 +47,21 @@ def purchase_tickets_page(request):
 
 def purchase_tickets(request):
     #getting the information from form
-    name = request.GET.get('fname')
+    fname = request.GET.get('fname')
     perfname = request.GET.get('shows')
     #getting information from the tables using the form information
     table = my_models.Attendees
     table2 = my_models.Performers
     table3 = my_models.Shows
-    object_list = table.objects.filter(Q(name__icontains=name))[:1]
-
-    attendee_id = object_list.get().id
-    object_list2 = table2.objects.filter(Q(name__icontains=perfname))[:1]
-
-    performer_id = object_list2.get().id
-    object_list3 = table3.objects.filter(Q(id__icontains=performer_id))[:1]
+    object_list = table.objects.filter(Q(name__icontains=fname))[:1]
+    attendeeid = object_list.get().id
+    object_list4 = table2.objects.filter(Q(name__icontains=perfname))[:1]
+    perf_id = object_list4.get().id
+    object_list2 = table3.objects.filter(Q(performer_id=perf_id))[:1]
+    ticketprice = object_list2.get().ticket_price
+    object_list3 = table3.objects.filter(Q(performer_id=perf_id))[:1]
     showid = object_list3.get().id
-    print(f'showid: {showid}, performerid: {performer_id}, attendee_id: {attendee_id}')
+    print(f'showid: {showid}, attendee_id: {attendeeid}, ticket_price: {ticketprice} ')
 
 #### ABOVE WORKS ####
 # https://docs.djangoproject.com/en/4.1/topics/db/queries/
@@ -73,17 +73,17 @@ def purchase_tickets(request):
 
     #transaction for checking show availability
         #get capacity from shows table with show id
-    obj_list = table3.objects.filter(Q(id__icontains=showid))[:1]
-    capacity = obj_list.get().capacity
+    obj_list = table3.objects.filter(Q(id=showid))[:1]
+    capacity = obj_list.get().num_attendees
         #get count of tickets purchsed from Tickets table with show id
     table4 = my_models.Tickets
-    obj_list2 = table4.objects.filter(Q(show_id__icontains=showid))
-    numtix = obj_list2
-        #check if capacity = num of tickets purchased, if yes, dont allow purchase
+    obj_list2 = table4.objects.filter(Q(show_id=showid))
+    numtix = obj_list2.count()
+    #check if capacity = num of tickets purchased, if yes, don't allow purchase
 
     #inserting row into tickets table
-    #insert_row = Tickets(attendee_id=attendee_id, show_id=showid)
-    #insert_row.save()
+    row = Tickets(show_id=showid, attendee_id=attendeeid, price=50)
+    row.save()
 
 def reports_page(request):
 

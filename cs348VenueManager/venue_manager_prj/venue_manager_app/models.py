@@ -46,7 +46,7 @@ class Attendees(models.Model):
     card_number = models.IntegerField(default=0)
 
     class Meta:
-        indexes = [models.Index(fields = ['name'])]
+        indexes = [models.Index(fields=['name'])]
 
     def __str__(self):
         return self.name
@@ -54,3 +54,7 @@ class Attendees(models.Model):
 class Tickets(models.Model):
     show = models.ForeignKey(Shows, on_delete=models.CASCADE)
     attendee = models.ForeignKey(Attendees, on_delete=models.CASCADE)
+    price = models.IntegerField(default=0)
+
+
+
