@@ -52,6 +52,6 @@ class Attendees(models.Model):
 
 
 class Tickets(models.Model):
-    show_id = models.ForeignKey(Shows, on_delete=models.CASCADE)
-    attendee_id = models.ForeignKey(Attendees, on_delete=models.CASCADE)
-
+    show = models.ForeignKey(Shows, on_delete=models.CASCADE)
+    attendee = models.ForeignKey(Attendees, on_delete=models.CASCADE)
+    price = models.IntegerField(default=0)
