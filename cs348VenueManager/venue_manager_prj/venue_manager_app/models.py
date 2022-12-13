@@ -37,6 +37,7 @@ class Shows(models.Model):
     venue = models.ForeignKey(Venues, on_delete=models.CASCADE)
     date = models.DateField(default=django.utils.timezone.now)
 
+
 class Attendees(models.Model):
     phoneNumberRegex = RegexValidator(regex = r"^\+?1?\d{8,15}$")
     name = models.CharField(max_length=100)

@@ -44,7 +44,10 @@ class search_results(ListView):
 def purchase_tickets_page(request):
     #context = {}
     #context['object_list'] = HomePage.objects.all()
-    return render(request, 'purchase_tickets.html')
+    context = {}
+    context['object_list'] = Shows.objects.all()
+
+    return render(request, 'purchase_tickets.html', context=context)
 
 def purchase_tickets(request):
     #getting the information from form
@@ -99,9 +102,11 @@ def purchase_tickets(request):
             messages.success(request, "Success! Your tickets have been purchased!")
 
 
+    context = {}
+    context['object_list'] = Shows.objects.all()
 
 
-    return render(request, 'purchase_tickets.html')
+    return render(request, 'purchase_tickets.html', context=context)
 
 def reports_page(request):
 
