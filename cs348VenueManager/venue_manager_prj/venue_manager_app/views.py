@@ -2,6 +2,7 @@ from django.views.generic import ListView
 from django.shortcuts import render 
 from django.db.models import Q
 from django.db import connection
+from django.contrib import messages
 
 from . import models as my_models
 from .models import *
@@ -41,9 +42,9 @@ class search_results(ListView):
         return context
 
 def purchase_tickets_page(request):
-    context = {}
-    context['object_list'] = HomePage.objects.all()
-    return render(request, 'purchase_tickets.html', context=context)
+    #context = {}
+    #context['object_list'] = HomePage.objects.all()
+    return render(request, 'purchase_tickets.html')
 
 def purchase_tickets(request):
     #getting the information from form
@@ -54,36 +55,53 @@ def purchase_tickets(request):
     table2 = my_models.Performers
     table3 = my_models.Shows
     object_list = table.objects.filter(Q(name__icontains=fname))[:1]
-    attendeeid = object_list.get().id
+    attendeeid = str(object_list.get().id)
     object_list4 = table2.objects.filter(Q(name__icontains=perfname))[:1]
     perf_id = object_list4.get().id
-    object_list2 = table3.objects.filter(Q(performer_id=perf_id))[:1]
-    ticketprice = object_list2.get().ticket_price
+    #object_list2 = table3.objects.filter(Q(performer_id=perf_id))[:1]
+    #ticketprice = object_list2.get().ticket_price
     object_list3 = table3.objects.filter(Q(performer_id=perf_id))[:1]
-    showid = object_list3.get().id
-    print(f'showid: {showid}, attendee_id: {attendeeid}, ticket_price: {ticketprice} ')
-
-#### ABOVE WORKS ####
-# https://docs.djangoproject.com/en/4.1/topics/db/queries/
-# https://docs.djangoproject.com/en/4.1/ref/models/querysets/
+    showid = str(object_list3.get().id)
+    print(f"show: {showid} attendee: {attendeeid}")
 
 
-#### BELOW IS STILL WRONG #### 
+ #transaction for checking show availability
+
+    #obj_list = table3.objects.filter(Q(id=showid))[:1]
+    #capacity = obj_list.get().num_attendees
+
+    #table4 = my_models.Tickets
+    #obj_list2 = table4.objects.filter(Q(show_id=showid))
+    #numtix = obj_list2.count()
+
+    #if(capacity==numtix):
+        #cannot buy tickets
+
+    #else:
+        #row = Tickets(show_id=showid, attendee_id=attendeeid, price=50)
+        #row.save()
 
 
-    #transaction for checking show availability
-        #get capacity from shows table with show id
-    obj_list = table3.objects.filter(Q(id=showid))[:1]
-    capacity = obj_list.get().num_attendees
-        #get count of tickets purchsed from Tickets table with show id
-    table4 = my_models.Tickets
-    obj_list2 = table4.objects.filter(Q(show_id=showid))
-    numtix = obj_list2.count()
-    #check if capacity = num of tickets purchased, if yes, don't allow purchase
+    with connection.cursor() as cursor:
+        cursor.execute("""SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+                       START TRANSACTION; 
+                       INSERT INTO venue_manager_app_tickets(show_id, attendee_id, price) VALUES(2, 2, 50);""")
+        cursor.execute("SELECT venue_manager_app_shows.num_attendees, count(venue_manager_app_tickets.id) FROM venue_manager_app_tickets JOIN venue_manager_app_shows ON venue_manager_app_shows.id=venue_manager_app_tickets.show_id WHERE show_id=%s GROUP BY show_id;", [showid])
+        val = cursor.fetchone()
 
-    #inserting row into tickets table
-    row = Tickets(show_id=showid, attendee_id=attendeeid, price=50)
-    row.save()
+        print("val: ", val)
+
+        if(val==None):
+            cursor.execute("ROLLBACK;")
+            messages.error(request, 'There are no available tickets for this show, please select a different one')
+        else:
+            cursor.execute("COMMIT;")
+            messages.success(request, "Success! Your tickets have been purchased!")
+
+
+
+
+    return render(request, 'purchase_tickets.html')
 
 def reports_page(request):
 
