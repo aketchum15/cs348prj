@@ -90,7 +90,7 @@ def reports_page(request):
     context = {};
 
     with connection.cursor() as cursor:
-        cursor.execute("""SELECT p.name AS Name, IFNULL(AVG(t.price), 0) AS 'Average Ticket Price', count(s.id) AS 'Total Shows', sum(num_attendees) AS Fans FROM venue_manager_app_performers p 
+        cursor.execute("""SELECT p.name AS Name, IFNULL(AVG(t.price), 0) AS 'Average Ticket Price', count(s.id) AS 'Total Shows', COUNT(t.id) AS Fans FROM venue_manager_app_performers p 
                             JOIN venue_manager_app_shows s ON p.id = s.performer_id
                             LEFT JOIN venue_manager_app_tickets t ON t.show_id = s.id
 		                    GROUP BY p.id;""")
