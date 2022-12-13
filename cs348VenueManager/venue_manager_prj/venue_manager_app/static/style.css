@@ -26,9 +26,12 @@
   color: white;
 }
 
-table, th, td {
-  border: 100px solid;
-  border-collapse: collapse;
+table {
   width: 100%;
+}
+
+table, th, td {
+  border: 5px solid;
+  border-collapse: collapse;
   border-color: #333;
 }
